@@ -62,11 +62,12 @@
             this.bcktHash.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bcktHash.Location = new System.Drawing.Point(39, 71);
             this.bcktHash.Name = "bcktHash";
-            this.bcktHash.Size = new System.Drawing.Size(140, 24);
+            this.bcktHash.Size = new System.Drawing.Size(137, 24);
             this.bcktHash.TabIndex = 1;
             this.bcktHash.TabStop = true;
-            this.bcktHash.Text = "Bucket Hashing";
+            this.bcktHash.Text = "Bucket hashing";
             this.bcktHash.UseVisualStyleBackColor = true;
+            this.bcktHash.CheckedChanged += new System.EventHandler(this.bcktHash_CheckedChanged);
             // 
             // sondLin
             // 
@@ -79,6 +80,7 @@
             this.sondLin.TabStop = true;
             this.sondLin.Text = "Sondagem linear";
             this.sondLin.UseVisualStyleBackColor = true;
+            this.sondLin.CheckedChanged += new System.EventHandler(this.sondLin_CheckedChanged);
             // 
             // sondQua
             // 
@@ -91,6 +93,7 @@
             this.sondQua.TabStop = true;
             this.sondQua.Text = "Sondagem quadrática";
             this.sondQua.UseVisualStyleBackColor = true;
+            this.sondQua.CheckedChanged += new System.EventHandler(this.sondQua_CheckedChanged);
             // 
             // duplHash
             // 
@@ -103,6 +106,7 @@
             this.duplHash.TabStop = true;
             this.duplHash.Text = "Duplo hashing";
             this.duplHash.UseVisualStyleBackColor = true;
+            this.duplHash.CheckedChanged += new System.EventHandler(this.duplHash_CheckedChanged);
             // 
             // panel1
             // 
@@ -158,6 +162,7 @@
             this.btnIncluir.TabIndex = 10;
             this.btnIncluir.Text = "Incluir";
             this.btnIncluir.UseVisualStyleBackColor = false;
+            this.btnIncluir.Click += new System.EventHandler(this.btnIncluir_Click);
             // 
             // btnExcluir
             // 
@@ -172,6 +177,7 @@
             this.btnExcluir.TabIndex = 11;
             this.btnExcluir.Text = "Excluir";
             this.btnExcluir.UseVisualStyleBackColor = false;
+            this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
             // 
             // btnListar
             // 
@@ -186,6 +192,7 @@
             this.btnListar.TabIndex = 13;
             this.btnListar.Text = "Listar";
             this.btnListar.UseVisualStyleBackColor = false;
+            this.btnListar.Click += new System.EventHandler(this.btnListar_Click);
             // 
             // btnAlterar
             // 
@@ -200,6 +207,7 @@
             this.btnAlterar.TabIndex = 14;
             this.btnAlterar.Text = "Alterar";
             this.btnAlterar.UseVisualStyleBackColor = false;
+            this.btnAlterar.Click += new System.EventHandler(this.btnAlterar_Click);
             // 
             // lblLista
             // 
