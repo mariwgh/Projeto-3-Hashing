@@ -1,41 +1,48 @@
-ï»¿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 
-public class BucketHash<T> where T : IRegistro<T>, new()
+public class SondQuadra<T> where T : IRegistro<T>, new()
 {
-    private const int SIZE = 37;  // para gerar mais colisÃµes; o ideal Ã© primo > 100
-    ArrayList[] dados;            // tabela de hash expansÃ­vel
+    private const int SIZE = 37;  // para gerar mais colisões; o ideal é primo > 100
+    ArrayList[] dados;            // tabela de hash expansível
 
-    public BucketHash()
+    public SondQuadra()
     {
         dados = new ArrayList[SIZE];
         for (int i = 0; i < SIZE; i++)
             dados[i] = new ArrayList(4);
     }
 
-    private int Hash(string chave)
+    private int Hash(T chave)
     {
         long tot = 0;
-
         for (int i = 0; i < chave.Length; i++)
             tot += 37 * tot + (char)chave[i];
-
         tot = tot % dados.Length;
         if (tot < 0)
             tot += dados.Length;
-
         return (int)tot;
+        //return HashSimples.Hash(chave);     //pega o hash que o chico já fez
     }
 
     public bool Incluir(T novoDado)
     {
-        int valorDeHash = Hash(novoDado.Chave);
-        if (!dados[valorDeHash].Contains(novoDado))
-        {
-            dados[valorDeHash].Add(novoDado);
-            return true;
+        int valorHash = Hash(novoDado);
+        bool vazio = false;
+        int tentativas = 0;
+        while (!vazio) {
+            if (dados[valorHash] == null)
+            {
+                dados[valorHash] = novoDado;
+                vazio = true;
+            }
+            else
+            {
+                tentativas++;
+                valorHash = valorHash + Math.pow(tentativas, 2);
+            }
         }
-        return false;
+        return vazio;
     }
 
     public bool Excluir(T dado)
@@ -69,7 +76,7 @@ public class BucketHash<T> where T : IRegistro<T>, new()
 
     public bool Alterar(T dadoAntigo, T dadoNovo)
     {
-        //mas tipo, tem que verificar se existe e como eu vou saber se o usuÃ¡rio quer alterar a dica ou a palavra ou os dois?
+        //mas tipo, tem que verificar se existe e como eu vou saber se o usuário quer alterar a dica ou a palavra ou os dois?
         if (Excluir(dadoAntigo))
         {
             Incluir(dadoNovo);
