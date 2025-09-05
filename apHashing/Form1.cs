@@ -13,6 +13,7 @@ namespace apHashing
     public partial class Form1 : Form
     {
         string hashEscolhido;
+        BucketHash<string> bucketHash = new BucketHash<string>()
         public Form1()
         {
             InitializeComponent();
@@ -45,7 +46,18 @@ namespace apHashing
 
         private void btnExcluir_Click(object sender, EventArgs e)
         {
+            switch (hashEscolhido)
+            {
+                case "Bucket hashing":
+                    bucketHash.Excluir(txtBPalavra.Text);
+                    bucketHash.Excluir(txtBDica.Text);
+                    break;
 
+                case "Sondagem linear": break;
+                case "Sondagem quadrática": break;
+                case "Duplo hashing": break;
+                default: break;
+            }
         }
 
         private void btnAlterar_Click(object sender, EventArgs e)
@@ -55,7 +67,17 @@ namespace apHashing
 
         private void btnListar_Click(object sender, EventArgs e)
         {
+            switch (hashEscolhido)
+            {
+                case "Bucket hashing":
+                    bucketHash.Conteudo();
+                    break;
 
+                case "Sondagem linear": break;
+                case "Sondagem quadrática": break;
+                case "Duplo hashing": break;
+                default: break;
+            }
         }
 
         //EU DE VERDADE NÃO FAÇO A MENOR IDEIA DO QUE FAZER.
@@ -63,7 +85,11 @@ namespace apHashing
         {
             switch (hashEscolhido)
             {
-                case "Bucket hashing": break;       //fazer uma função para cada combinação? (bucket hashing p excluir, p incluir...???)
+                case "Bucket hashing": 
+                    bucketHash.Incluir(txtBPalavra.Text);
+                    bucketHash.Incluir(txtBDica.Text); 
+                    break;    
+
                 case "Sondagem linear": break;
                 case "Sondagem quadrática": break;
                 case "Duplo hashing": break;
