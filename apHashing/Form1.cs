@@ -46,7 +46,7 @@ namespace apHashing
 
         private void btnExcluir_Click(object sender, EventArgs e)
         {
-            switch (hashEscolhido)
+            switch (hashEscolhido.Trim())
             {
                 case "Bucket hashing":
                     bucketHash.Excluir(txtBPalavra.Text);
@@ -67,7 +67,7 @@ namespace apHashing
 
         private void btnListar_Click(object sender, EventArgs e)
         {
-            switch (hashEscolhido)
+            switch (hashEscolhido.Trim())
             {
                 case "Bucket hashing":
                     bucketHash.Conteudo();
@@ -83,7 +83,7 @@ namespace apHashing
         //EU DE VERDADE NÃO FAÇO A MENOR IDEIA DO QUE FAZER.
         private void btnIncluir_Click(object sender, EventArgs e)
         {
-            switch (hashEscolhido)
+            switch (hashEscolhido.Trim())
             {
                 case "Bucket hashing": 
                     bucketHash.Incluir(txtBPalavra.Text);

@@ -56,8 +56,7 @@ public class SondQuadra<T> where T : IRegistro<T>, new()
 
     public bool Existe(T dado, out int onde)
     {
-        onde = Hash(dado.Chave);
-        return dados[onde].Contains(dado);
+        
     }
 
     public List<string> Conteudo()

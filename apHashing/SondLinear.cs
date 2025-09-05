@@ -27,7 +27,7 @@ public class SondLinear<T> where T : IRegistro<T>, new()
 
     public bool Incluir(T novoDado)
     {
-        int valorHash = Hash(novoDado);
+        int valorHash = Hash(novoDado.Chave);
         bool vazio = false;
         while (!vazio && valorHash){
             if (dados[valorHash] == null)
@@ -49,18 +49,44 @@ public class SondLinear<T> where T : IRegistro<T>, new()
 
     public bool Excluir(T dado)
     {
+        bool encontrou = false;
         int onde = 0;
-        if (!Existe(dado, out onde))
-            return false;
-        dados[onde].Remove(dado);
-        return true;
+        if (!Existe(dado, out onde))        //se nao existir no dados
+        {
+            return encontrou;
+        }
+        else
+        {
+            int hash = Hash(dado.Chave);
+            int i = 0;
+            while (i < dados.Length)
+            {
+                if (dados[onde].Equals(dado))
+                    return true;
+
+                onde = (onde + 1) % dados.Length;       //pega o hash e soma +1, e o %dados.Length serve p voltar ao início
+                i++;
+            }
+        }
     }
 
     public bool Existe(T dado, out int onde)
     {
-        onde = Hash(dado.Chave);
-        return dados[onde].Contains(dado);
+        int hash = Hash(dado.Chave);
+        int i = 0;
+        onde = hash;
+        while (i < dados.Length)
+        {
+            if (dados[onde].Equals(dado))
+                return true;
+
+            onde = (onde + 1) % dados.Length;       //pega o hash e soma +1, e o %dados.Length serve p voltar ao início
+            i++;
+        }
+        onde = -1;      //-1 sendo como um null
+        return false;
     }
+
 
     public List<string> Conteudo()
     {
@@ -76,15 +102,16 @@ public class SondLinear<T> where T : IRegistro<T>, new()
         return saida;
     }
 
-    public bool Alterar(T dadoAntigo, T dadoNovo)
+    public bool Alterar(T palavra, T dica)
     {
         //mas tipo, tem que verificar se existe e como eu vou saber se o usuário quer alterar a dica ou a palavra ou os dois?
-        if (Excluir(dadoAntigo))
+        if (Existe(palavra, 0))        //se existe a palavra, ele quer alterar a dica
         {
-            Incluir(dadoNovo);
-            return true;
+            
         }
-        return false;
+        else if (Existe(dica, 0)){      //se existe a dica, ele quer alterar a palavra
+
+        }
     }
 
 }
