@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="BucketHash.cs" />
     <Compile Include="Dicionario.cs" />
+    <Compile Include="DuploHash.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,6 +64,8 @@
     <Compile Include="NoLista.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SondLinear.cs" />
+    <Compile Include="SondQuad.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

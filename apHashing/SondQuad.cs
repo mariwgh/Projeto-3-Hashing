@@ -2,21 +2,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using apListaLigada;
 
 namespace apHashing
 {
-    internal class SondLinear<T> where T : IRegistro<T>, new()
+    internal class SondQuad<T> where T : IRegistro<T>, new()
     {
         private const int SIZE = 37;  // para gerar mais colisões; o ideal é primo > 100
         T[] dados;            // tabela de hash expansível
 
-        public SondLinear()
+        public SondQuadra()
         {
-          dados = new T[SIZE];
+            dados = new T[SIZE];
+            
         }
 
         private int Hash(string chave)
@@ -35,8 +34,8 @@ namespace apHashing
         {
             int valorHash = Hash(novoDado.Chave);
             bool vazio = false;
-            int tentativas = 0;     //só para caso o dados esteja cheio
-            while (!vazio && tentativas < SIZE)
+            int tentativas = 0;
+            while (!vazio)
             {
                 if (dados[valorHash] == null)
                 {
@@ -45,8 +44,8 @@ namespace apHashing
                 }
                 else
                 {
-                    valorHash = (valorHash + 1) % SIZE;
                     tentativas++;
+                    valorHash = (valorHash + tentativas * tentativas) % SIZE;
                 }
             }
             return vazio;
@@ -57,54 +56,60 @@ namespace apHashing
             int onde = 0;
             bool excluiu = false;
             if (!Existe(dado, out onde))
-            {
                 return false;
-            }
-            else {
+            else                        //não precisaria do else, mas eu acho mais organizado 
+            {
                 dados[onde] = default;
-                excluiu = true; 
-            }
+                excluiu = true;
+            } 
             return excluiu;
         }
 
         public bool Existe(T dado, out int onde)
         {
-            int hash = Hash(dado.Chave);
-            int i = 0;
-            onde = hash;
-            while (i < SIZE)
+            onde = Hash(dado.Chave);
+            bool achou = false;
+            int tentativas = 0;
+            while (!achou && tentativas < SIZE)         //se não achou E tentativas < SIZE
             {
                 if (dados[onde].Equals(dado))
-                    return true;
-
-                onde = (onde + 1) % SIZE;       //pega o hash e soma +1, e o %dados.Length serve p voltar ao início
-                i++;
+                    achou = true;
+                else
+                {
+                    tentativas++;
+                    onde = (onde + tentativas * tentativas) % SIZE;
+                }
             }
-            onde = -1;      //-1 sendo como um null
-            return false;
+            onde = -1;
+            return achou;
         }
-
 
         public List<string> Conteudo()
         {
             List<string> saida = new List<string>();
-            for(int i = 0; i < SIZE; i++)
+            for (int i = 0; i < dados.Length; i++)
             {
                 if (dados[i] != null)
                 {
                     string linha = $"{i,5} : {dados[i]}";
                     saida.Add(linha);
                 }
-            }
+            }     
             return saida;
         }
 
-        public bool Alterar(T palavra, T dica)      //o usuário só altera a dica.
+        //esse aqui de verdade eu não sei💔
+        public bool Alterar(T dadoAntigo, T dadoNovo)
         {
-            //Dicionario dicionario = new Dicionario();
+            //mas tipo, tem que verificar se existe e como eu vou saber se o usuário quer alterar a dica ou a palavra ou os dois?
+            if (Excluir(dadoAntigo))
+            {
+                Incluir(dadoNovo);
+                return true;
+            }
             return false;
         }
+    }
 
     }
-}
 
