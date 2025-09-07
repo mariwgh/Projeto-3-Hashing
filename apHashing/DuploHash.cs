@@ -99,6 +99,20 @@ namespace apHashing
             return achou;
         }
 
+        public List<string> Conteudo()
+        {
+            List<string> saida = new List<string>();
+            for(int i = 0; i < SIZE; i++)
+            {
+                if (dados[i] != null)
+                {
+                    string linha = $"{i,5} : {dados[i]}";
+                    saida.Add(linha);
+                }
+            }
+            return saida;
+        }
+
         public bool Alterar(T dadoAntigo, T dadoNovo)
         {
             return false;

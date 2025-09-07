@@ -14,7 +14,10 @@ namespace apHashing
     public partial class Form1 : Form
     {
         string hashEscolhido;
-        BucketHash<string> bucketHash = new BucketHash<string>()
+        BucketHash<string> bucketHash = new BucketHash<string>();
+        SondLinear<String> sondLinear = new SondLinear<String>();
+        SondQuad<String> sondQuadra = new SondQuad<String>();
+        DuploHash<String> duplo = new DuploHash<String>();
         public Form1()
         {
             InitializeComponent();
@@ -54,9 +57,18 @@ namespace apHashing
                     bucketHash.Excluir(txtBDica.Text);
                     break;
 
-                case "Sondagem linear": break;
-                case "Sondagem quadrática": break;
-                case "Duplo hashing": break;
+                case "Sondagem linear":
+                    sondLinear.Excluir(txtBPalavra.Text);
+                    sondLinear.Excluir(txtBDica.Text);
+                    break;
+                case "Sondagem quadrática":
+                    sondQuadra.Excluir(txtBPalavra.Text);
+                    sondQuadra.Excluir(txtBDica.Text);
+                    break;
+                case "Duplo hashing":
+                    duplo.Excluir(txtBPalavra.Text);
+                    duplo.Excluir(txtBDica.Text);
+                    break;
                 default: break;
             }
         }
@@ -74,14 +86,19 @@ namespace apHashing
                     bucketHash.Conteudo();
                     break;
 
-                case "Sondagem linear": break;
-                case "Sondagem quadrática": break;
-                case "Duplo hashing": break;
+                case "Sondagem linear": 
+                    sondLinear.Conteudo();
+                    break;
+                case "Sondagem quadrática":
+                    sondQuadra.Conteudo();
+                    break;
+                case "Duplo hashing":
+                    duplo.Conteudo();
+                    break;
                 default: break;
             }
         }
 
-        //EU DE VERDADE NÃO FAÇO A MENOR IDEIA DO QUE FAZER.
         private void btnIncluir_Click(object sender, EventArgs e)
         {
             switch (hashEscolhido.Trim())
@@ -91,9 +108,21 @@ namespace apHashing
                     bucketHash.Incluir(txtBDica.Text); 
                     break;    
 
-                case "Sondagem linear": break;
-                case "Sondagem quadrática": break;
-                case "Duplo hashing": break;
+                case "Sondagem linear": 
+                    sondLinear.Incluir(txtBPalavra.Text);
+                    sondLinear.Incluir(txtBDica.Text); 
+                    break;
+
+                case "Sondagem quadrática":
+                    sondQuadra.Incluir(txtBPalavra.Text);
+                    sondQuadra.Incluir( txtBDica.Text);
+                    break;
+
+                case "Duplo hashing":
+                    duplo.Incluir(txtBPalavra.Text);
+                    duplo.Incluir(txtBDica.Text);
+                    break;
+
                 default: break;
             }
         }

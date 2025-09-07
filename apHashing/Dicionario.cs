@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -86,6 +87,8 @@ namespace apListaLigada
             }
         }
 
+        public string Chave => throw new NotImplementedException();
+
         // construtores da classe PalavraDica: 
         // se passar a palavra e a dica ja separadas
         public Dicionario(string palavra, string dica)
@@ -140,6 +143,41 @@ namespace apListaLigada
         public override string ToString()
         {
             return palavra + " " + dica;
+        }
+
+        public void LerRegistro(StreamReader arquivo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EscreverRegistro(StreamWriter arquivo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Equals(Dicionario outroRegistro)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static bool operator <(Dicionario left, Dicionario right)
+        {
+            return left.CompareTo(right) < 0;
+        }
+
+        public static bool operator <=(Dicionario left, Dicionario right)
+        {
+            return left.CompareTo(right) <= 0;
+        }
+
+        public static bool operator >(Dicionario left, Dicionario right)
+        {
+            return left.CompareTo(right) > 0;
+        }
+
+        public static bool operator >=(Dicionario left, Dicionario right)
+        {
+            return left.CompareTo(right) >= 0;
         }
     }
 }
