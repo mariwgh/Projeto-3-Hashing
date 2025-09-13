@@ -8,8 +8,10 @@ namespace apHashing
 {
     internal class DuploHash<T> where T : IRegistro<T>, new()
     {
-        private const int SIZE = 37;  // para gerar mais colisões; o ideal é primo > 100
-        T[] dados;            // tabela de hash expansível
+        //Usa outro cálculo pra achar lugar.
+
+        private const int SIZE = 37;    // para gerar mais colisões; o ideal é primo > 100
+        T[] dados;                      // tabela de hash expansível
         public DuploHash() { 
             dados = new T[SIZE];
         }

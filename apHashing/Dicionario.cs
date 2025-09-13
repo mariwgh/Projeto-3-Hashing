@@ -12,8 +12,7 @@ using apHashSimples;
 
 namespace apListaLigada
 {
-    public class Dicionario : IComparable<Dicionario>,
-                      ICriterioDeSeparacao<Dicionario>
+    public class Dicionario : IComparable<Dicionario>, ICriterioDeSeparacao<Dicionario>
     {
         // atributos da antiga classe PalavraDica, agora Dicionario:
         string palavra, dica;
@@ -159,6 +158,7 @@ namespace apListaLigada
         {
             throw new NotImplementedException();
         }
+
 
         public static bool operator <(Dicionario left, Dicionario right)
         {

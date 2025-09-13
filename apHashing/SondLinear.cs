@@ -11,8 +11,11 @@ namespace apHashing
 {
     internal class SondLinear<T> where T : IRegistro<T>, new()
     {
-        private const int SIZE = 37;  // para gerar mais colisões; o ideal é primo > 100
-        T[] dados;            // tabela de hash expansível
+        //Cada compartimento só guarda uma coisa.
+        //Se bater colisão(já tem alguém lá), você vai para o próximo compartimento vazio.
+
+        private const int SIZE = 37;    // para gerar mais colisões; o ideal é primo > 100
+        T[] dados;                      // tabela de hash expansível
 
         public SondLinear()
         {
