@@ -12,7 +12,7 @@ namespace apHashing
         private const int SIZE = 37;  // para gerar mais colisões; o ideal é primo > 100
         T[] dados;            // tabela de hash expansível
 
-        public SondQuadra()
+        public SondQuad()
         {
             dados = new T[SIZE];
             
@@ -112,4 +112,3 @@ namespace apHashing
     }
 
     }
-

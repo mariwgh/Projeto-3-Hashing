@@ -79,4 +79,3 @@ public class BucketHash<T> where T : IRegistro<T>, new()
     }
 
 }
-

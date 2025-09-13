@@ -84,7 +84,6 @@ namespace apHashing
             return false;
         }
 
-
         public List<string> Conteudo()
         {
             List<string> saida = new List<string>();
@@ -107,4 +106,3 @@ namespace apHashing
 
     }
 }
-
