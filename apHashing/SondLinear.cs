@@ -83,7 +83,6 @@ namespace apHashing
                 onde = (onde + 1) % SIZE;       //pega o hash e soma +1, e o %dados.Length serve p voltar ao início
                 i++;
             }
-            onde = -1;      //-1 sendo como um null
             return false;
         }
 

@@ -85,7 +85,8 @@ namespace apHashing
                     onde = (onde + tentativas * tentativas) % SIZE;
                 }
             }
-            onde = -1;
+            if (!achou)
+                onde = -1;      //não achou
             return achou;
         }
 
