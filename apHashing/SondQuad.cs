@@ -59,12 +59,14 @@ namespace apHashing
             int onde = 0;
             bool excluiu = false;
             if (!Existe(dado, out onde))
+            {
                 return false;
-            else                        //não precisaria do else, mas eu acho mais organizado 
+            }
+            else
             {
                 dados[onde] = default;
                 excluiu = true;
-            } 
+            }
             return excluiu;
         }
 
@@ -90,14 +92,20 @@ namespace apHashing
         public List<string> Conteudo()
         {
             List<string> saida = new List<string>();
-            for (int i = 0; i < dados.Length; i++)
+
+            for (int i = 0; i < SIZE; i++)
             {
+                string linha = $"{i,5} : | ";
+
                 if (dados[i] != null)
                 {
-                    string linha = $"{i,5} : {dados[i]}";
-                    saida.Add(linha);
+                    Dicionario dadoNoDicionario = dados[i] as Dicionario;
+                    linha += $"{dadoNoDicionario.Palavra.PadRight(30, ' ').Substring(0, 30)} - {dadoNoDicionario.Dica.PadRight(30, ' ').Substring(0, 30)} | ";
                 }
-            }     
+
+                saida.Add(linha);
+            }
+
             return saida;
         }
 

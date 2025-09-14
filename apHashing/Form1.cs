@@ -30,6 +30,9 @@ namespace apHashing
         }
 
 
+        //se ele tiver escolhido outra tecnica, percorrer a tabela e gravar dados, para percorrer segundo a nova tecnica
+
+
         //seleção da técnica de hashing:
         //qnd o user selecionar o radiobutton de buckethashing
         private void bcktHash_CheckedChanged(object sender, EventArgs e)
@@ -69,7 +72,7 @@ namespace apHashing
                 while (noAtual != null)
                 {
                     // Insere cada item lido do arquivo na tabela de hash
-                    bucketHash.Incluir(noAtual.Info);
+                    sondLinear.Incluir(noAtual.Info);
                     noAtual = noAtual.Prox;
                 }
             }
@@ -92,7 +95,7 @@ namespace apHashing
                 while (noAtual != null)
                 {
                     // Insere cada item lido do arquivo na tabela de hash
-                    bucketHash.Incluir(noAtual.Info);
+                    sondQuadra.Incluir(noAtual.Info);
                     noAtual = noAtual.Prox;
                 }
             }
@@ -115,7 +118,7 @@ namespace apHashing
                 while (noAtual != null)
                 {
                     // Insere cada item lido do arquivo na tabela de hash
-                    bucketHash.Incluir(noAtual.Info);
+                    duplo.Incluir(noAtual.Info);
                     noAtual = noAtual.Prox;
                 }
             }
@@ -123,8 +126,8 @@ namespace apHashing
             btnListar_Click(sender, e);
         }
 
-        //ler o arquivo de palavras e dicas qnd ele escolhe uma tecnica
 
+        //ler o arquivo de palavras e dicas qnd ele escolhe uma tecnica
         private void FazerLeitura(ListaSimples<Dicionario> qualLista)
         {
             lsbListagem.Items.Clear();
@@ -132,6 +135,8 @@ namespace apHashing
             qualLista = new ListaSimples<Dicionario>();     // recria a lista a ser lida
 
             OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Title = "Escolher arquivo para ler dados.";
+
             if (openFileDialog.ShowDialog() == DialogResult.OK)  // usuário pressionou botão Abrir?
             {
                 StreamReader arquivo = new StreamReader(openFileDialog.FileName);
@@ -148,7 +153,6 @@ namespace apHashing
             arqPalavraDica = qualLista;
         }
 
-        //se ele tiver escolhido outra tecnica, percorrer a tabela e gravar dados, para percorrer segundo a nova tecnica
 
         private void btnIncluir_Click(object sender, EventArgs e)
         {
@@ -278,16 +282,20 @@ namespace apHashing
 
 
         //qnd o programa for encerrado, percorrer a tabela de hashing e salvar os dados no arq
-
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            SalvarNoArq();
+        }
+
+        private void SalvarNoArq()
+        {
             OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Title = "Salvar dados no arquivo para encerrar programa.";
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 arqPalavraDica.GravarDados(openFileDialog.FileName);
             }
-
         }
     }
 }

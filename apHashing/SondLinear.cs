@@ -90,14 +90,20 @@ namespace apHashing
         public List<string> Conteudo()
         {
             List<string> saida = new List<string>();
-            for(int i = 0; i < SIZE; i++)
+
+            for (int i = 0; i < SIZE; i++)
             {
+                string linha = $"{i,5} : | ";
+
                 if (dados[i] != null)
                 {
-                    string linha = $"{i,5} : {dados[i]}";
-                    saida.Add(linha);
+                    Dicionario dadoNoDicionario = dados[i] as Dicionario;
+                    linha += $"{dadoNoDicionario.Palavra.PadRight(30, ' ').Substring(0, 30)} - {dadoNoDicionario.Dica.PadRight(30, ' ').Substring(0, 30)} | ";
                 }
+
+                saida.Add(linha);
             }
+
             return saida;
         }
 
