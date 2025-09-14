@@ -12,7 +12,7 @@ using apHashSimples;
 
 namespace apListaLigada
 {
-    public class Dicionario : IComparable<Dicionario>, ICriterioDeSeparacao<Dicionario>
+    public class Dicionario : IComparable<Dicionario>, ICriterioDeSeparacao<Dicionario>, IRegistro<Dicionario>
     {
         // atributos da antiga classe PalavraDica, agora Dicionario:
         string palavra, dica;

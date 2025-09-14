@@ -1,23 +1,23 @@
 ﻿using apListaLigada;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
-public class BucketHash<T> where T : IRegistro<T>, new()
+public class BucketHash<T> where T : IRegistro<T>, IComparable<T>, new()
 {
     //Cada compartimento pode guardar mais de uma coisa.
     //Se duas coisas caírem no mesmo compartimento, você coloca na mesma lista dentro dele.
 
-    private const int SIZE = 37;    // para gerar mais colisões; o ideal é primo > 100
-    ListaSimples<T> dados;          // tabela de hash expansível
+    private const int SIZE = 37;            // para gerar mais colisões; o ideal é primo > 100
+    ListaSimples<ListaSimples<T>> dados;    // tabela de hash expansível; é uma lista de listas
 
     public BucketHash()
     {
-        dados = new ListaSimples<T>();
-        dados.QuantosNos = SIZE;
+        dados = new ListaSimples<ListaSimples<T>>();
 
         for (int i = 0; i < SIZE; i++)
-            dados[i] = new ArrayList(4);
+            dados.InserirAposOFim(new ListaSimples<T>());
     }
 
     private int Hash(string chave)
@@ -36,10 +36,14 @@ public class BucketHash<T> where T : IRegistro<T>, new()
 
     public bool Incluir(T novoDado)
     {
-        int valorDeHash = Hash(novoDado.Chave);
-        if (!dados[valorDeHash].Contains(novoDado))
+        int valorDeHash = Hash(novoDado.Chave);     //compartimento q sera adicionado
+
+        dados.PosicionaLista(valorDeHash);
+        ListaSimples<T> compartimento = dados.Atual.Info;
+
+        if (!compartimento.Existe(novoDado))
         {
-            dados[valorDeHash].Add(novoDado);
+            compartimento.InserirAposOFim(novoDado);
             return true;
         }
         return false;
@@ -50,27 +54,37 @@ public class BucketHash<T> where T : IRegistro<T>, new()
         int onde = 0;
         if (!Existe(dado, out onde))
             return false;
-        dados[onde].Remove(dado);
+        dados.PosicionaLista(onde);
+        dados.Atual.Info.Remover(dado);
         return true;
     }
 
     public bool Existe(T dado, out int onde)
     {
         onde = Hash(dado.Chave);
-        return dados[onde].Contains(dado);
+        dados.PosicionaLista(onde);
+        return dados.Atual.Info.Existe(dado);
     }
 
     public List<string> Conteudo()
     {
         List<string> saida = new List<string>();
+
         for (int i = 0; i < dados.QuantosNos; i++)
-            if (dados[i].Count > 0)
+        {
+            dados.PosicionaLista(i);
+
+            if (dados.Atual.Info != null)
             {
                 string linha = $"{i,5} : ";
-                foreach (T dado in dados[i])
+
+                foreach (T dado in dados.Atual.Info.ListarDados())
                     linha += " | " + dado;
+
                 saida.Add(linha);
             }
+        }
+
         return saida;
     }
 
