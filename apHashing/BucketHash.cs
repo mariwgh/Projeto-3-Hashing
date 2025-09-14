@@ -73,30 +73,59 @@ public class BucketHash<T> where T : IRegistro<T>, IComparable<T>, new()
         for (int i = 0; i < dados.QuantosNos; i++)
         {
             dados.PosicionaLista(i);
+            ListaSimples<T> listaDoBucket = dados.Atual.Info;
 
-            if (dados.Atual.Info != null)
+            string linha = $"{i,5} : | ";
+
+            if (listaDoBucket != null && !listaDoBucket.EstaVazia)
             {
-                string linha = $"{i,5} : ";
 
-                foreach (T dado in dados.Atual.Info.ListarDados())
-                    linha += " | " + dado;
+                listaDoBucket.PosicionaLista(0);
+                var noAtual = listaDoBucket.Atual;
 
-                saida.Add(linha);
+                while (noAtual != null)
+                {
+                    Dicionario dadoNoDicionario = noAtual.Info as Dicionario;
+                    linha += $"{dadoNoDicionario.Palavra.PadRight(30, ' ').Substring(0, 30)} - {dadoNoDicionario.Dica.PadRight(30, ' ').Substring(0, 30)} | ";
+                    noAtual = noAtual.Prox;
+                }
             }
+
+            saida.Add(linha);
         }
 
         return saida;
     }
 
-    public bool Alterar(T dadoAntigo, T dadoNovo)
+    public bool Alterar(T dadoNovo)
     {
-        //mas tipo, tem que verificar se existe e como eu vou saber se o usuário quer alterar a dica ou a palavra ou os dois?
-        if (Excluir(dadoAntigo))
-        {
-            Incluir(dadoNovo);
-            return true;
-        }
-        return false;
-    }
+        //usuario so altera dica
+      
+        int indice;
 
+        if (Existe(dadoNovo, out indice))
+        {
+            // Se o registro (dado novo) existe, você o encontra na lista.
+            dados.PosicionaLista(indice);
+            ListaSimples<T> compPalavraDica = dados.Atual.Info;
+
+            // encontrar o item específico dentro da lista do bucket
+            var no = compPalavraDica.Atual;
+            while (no != null)
+            {
+                if (no.Info.Equals(dadoNovo))
+                {
+                    Dicionario dadoNoDicionario = no.Info as Dicionario;
+
+                    if (dadoNoDicionario != null)
+                    {
+                        dadoNoDicionario.Dica = (dadoNovo as Dicionario).Dica;
+                        return true;
+                    }
+                }
+                no = no.Prox;
+            }
+        }
+        return false; 
+    }
 }

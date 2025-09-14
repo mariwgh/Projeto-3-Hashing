@@ -101,11 +101,18 @@ namespace apHashing
             return saida;
         }
 
-        public bool Alterar(T palavra, T dica)      //o usuário só altera a dica.
+        public bool Alterar(T dadoNovo)
         {
-            //Dicionario dicionario = new Dicionario();
+            //usuario so altera dica
+
+            int indice;
+            if (Existe(dadoNovo, out indice))
+            {
+                T compPalavraDica = dados[indice];
+                Dicionario dadoNoDicionario = compPalavraDica as Dicionario;
+                dadoNoDicionario.Dica = (dadoNovo as Dicionario).Dica;
+            }
             return false;
         }
-
     }
 }

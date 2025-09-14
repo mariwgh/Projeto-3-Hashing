@@ -1,4 +1,5 @@
-﻿using System;
+﻿using apListaLigada;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -137,6 +138,31 @@ public class ListaSimples<Dado> : IComparable<ListaSimples<Dado>> where Dado : I
         }
 
         return atual;
+    }
+
+    //metodo que retorna o indice do valor desejado
+    public int RetornaIndiceValor(Dicionario valor)
+    {
+        int indice = 0;
+        atual = primeiro;
+
+        while (atual != null)
+        {
+            if (atual.Info != null)
+            {
+                if (atual.Info is Dicionario dicionario)
+                {
+                    if (dicionario.Palavra.Trim().Equals(valor.Palavra.Trim()))
+                    {
+                        return indice;
+                    }
+                }
+            }
+            atual = atual.Prox;
+            indice++;
+        }
+
+        return -1; 
     }
 
     //metodo que posiciona o cursor no indice desejado

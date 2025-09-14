@@ -1,4 +1,5 @@
-﻿using System;
+﻿using apListaLigada;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -115,8 +116,17 @@ namespace apHashing
             return saida;
         }
 
-        public bool Alterar(T dadoAntigo, T dadoNovo)
+        public bool Alterar(T dadoNovo)
         {
+            //usuario so altera dica
+
+            int indice;
+            if (Existe(dadoNovo, out indice))
+            {
+                T compPalavraDica = dados[indice];
+                Dicionario dadoNoDicionario = compPalavraDica as Dicionario;
+                dadoNoDicionario.Dica = (dadoNovo as Dicionario).Dica;
+            }
             return false;
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using apListaLigada;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -100,17 +101,18 @@ namespace apHashing
             return saida;
         }
 
-        //esse aqui de verdade eu não sei💔
-        public bool Alterar(T dadoAntigo, T dadoNovo)
+        public bool Alterar(T dadoNovo)
         {
-            //mas tipo, tem que verificar se existe e como eu vou saber se o usuário quer alterar a dica ou a palavra ou os dois?
-            if (Excluir(dadoAntigo))
+            //usuario so altera dica
+
+            int indice;
+            if (Existe(dadoNovo, out indice))
             {
-                Incluir(dadoNovo);
-                return true;
+                T compPalavraDica = dados[indice];
+                Dicionario dadoNoDicionario = compPalavraDica as Dicionario;
+                dadoNoDicionario.Dica = (dadoNovo as Dicionario).Dica;
             }
             return false;
         }
     }
-
-    }
+}

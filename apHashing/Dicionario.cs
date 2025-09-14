@@ -2,13 +2,15 @@
 // 24153 Rafaelly Maria Nascimento da Silva
 
 
+using apHashSimples;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
-using apHashSimples;
 
 namespace apListaLigada
 {
@@ -43,6 +45,7 @@ namespace apListaLigada
             return encontrou;
         }
 
+        /*
         public List<bool> Acertou
         {
             get => acertou;
@@ -59,6 +62,7 @@ namespace apListaLigada
                 //ainda não foram indicadas.
             }
         }
+        */
 
         // projeto I
         public string Palavra
@@ -86,7 +90,8 @@ namespace apListaLigada
             }
         }
 
-        public string Chave => throw new NotImplementedException();
+        public string Chave => this.Palavra.Trim();
+
 
         // construtores da classe PalavraDica: 
         // se passar a palavra e a dica ja separadas
@@ -98,7 +103,7 @@ namespace apListaLigada
                 throw new Exception("30 caracteres atingidos.");
             }
 
-            Acertou = acertou;
+            //Acertou = acertou;
 
             Palavra = palavra;
             Dica = dica;
@@ -121,6 +126,13 @@ namespace apListaLigada
             {
                 Dica = "";
             }
+        }
+
+        public Dicionario()
+        {
+            palavra = "";
+            dica = "";
+            acertou = new List<bool>();
         }
 
 
@@ -156,7 +168,11 @@ namespace apListaLigada
 
         public bool Equals(Dicionario outroRegistro)
         {
-            throw new NotImplementedException();
+            // Se o outro registro for nulo, eles não podem ser iguais
+            if (outroRegistro == null)
+                    return false;
+
+            return this.Palavra.Equals(outroRegistro.Palavra);
         }
 
 

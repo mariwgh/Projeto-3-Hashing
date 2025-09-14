@@ -18,13 +18,14 @@ namespace apHashing
         ListaSimples<Dicionario> arqPalavraDica;
 
         BucketHash<Dicionario> bucketHash = new BucketHash<Dicionario>();
-        SondLinear<string> sondLinear = new SondLinear<string>();
-        SondQuad<string> sondQuadra = new SondQuad<string>();
-        DuploHash<string> duplo = new DuploHash<string>();
+        SondLinear<Dicionario> sondLinear = new SondLinear<Dicionario>();
+        SondQuad<Dicionario> sondQuadra = new SondQuad<Dicionario>();
+        DuploHash<Dicionario> duplo = new DuploHash<Dicionario>();
         
         public Form1()
         {
             InitializeComponent();
+            lsbListagem.Font = new Font("Consolas", 8);
             hashEscolhido = "";
         }
 
@@ -35,6 +36,22 @@ namespace apHashing
         {
             hashEscolhido = bcktHash.Text;
             FazerLeitura(arqPalavraDica);
+
+            if (arqPalavraDica != null)
+            {
+                // Itera sobre a lista de dados lida do arquivo
+                arqPalavraDica.PosicionaLista(0);
+                var noAtual = arqPalavraDica.Atual;
+
+                while (noAtual != null)
+                {
+                    // Insere cada item lido do arquivo na tabela de hash
+                    bucketHash.Incluir(noAtual.Info);
+                    noAtual = noAtual.Prox;
+                }
+            }
+
+            btnListar_Click(sender, e);
         }
 
         //qnd o user selecionar o radiobutton de sondagem linear
@@ -42,6 +59,22 @@ namespace apHashing
         {
             hashEscolhido = sondLin.Text;
             FazerLeitura(arqPalavraDica);
+
+            if (arqPalavraDica != null)
+            {
+                // Itera sobre a lista de dados lida do arquivo
+                arqPalavraDica.PosicionaLista(0);
+                var noAtual = arqPalavraDica.Atual;
+
+                while (noAtual != null)
+                {
+                    // Insere cada item lido do arquivo na tabela de hash
+                    bucketHash.Incluir(noAtual.Info);
+                    noAtual = noAtual.Prox;
+                }
+            }
+
+            btnListar_Click(sender, e);
         }
 
         //qnd o user selecionar o radiobutton de sondagem quadrática
@@ -49,6 +82,22 @@ namespace apHashing
         {
             hashEscolhido = sondQua.Text;
             FazerLeitura(arqPalavraDica);
+
+            if (arqPalavraDica != null)
+            {
+                // Itera sobre a lista de dados lida do arquivo
+                arqPalavraDica.PosicionaLista(0);
+                var noAtual = arqPalavraDica.Atual;
+
+                while (noAtual != null)
+                {
+                    // Insere cada item lido do arquivo na tabela de hash
+                    bucketHash.Incluir(noAtual.Info);
+                    noAtual = noAtual.Prox;
+                }
+            }
+
+            btnListar_Click(sender, e);
         }
 
         //qnd o user selecionar o radiobutton de duplo hashing
@@ -56,12 +105,30 @@ namespace apHashing
         {
             hashEscolhido = duplHash.Text;
             FazerLeitura(arqPalavraDica);
+
+            if (arqPalavraDica != null)
+            {
+                // Itera sobre a lista de dados lida do arquivo
+                arqPalavraDica.PosicionaLista(0);
+                var noAtual = arqPalavraDica.Atual;
+
+                while (noAtual != null)
+                {
+                    // Insere cada item lido do arquivo na tabela de hash
+                    bucketHash.Incluir(noAtual.Info);
+                    noAtual = noAtual.Prox;
+                }
+            }
+
+            btnListar_Click(sender, e);
         }
 
         //ler o arquivo de palavras e dicas qnd ele escolhe uma tecnica
 
         private void FazerLeitura(ListaSimples<Dicionario> qualLista)
         {
+            lsbListagem.Items.Clear();
+
             qualLista = new ListaSimples<Dicionario>();     // recria a lista a ser lida
 
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -73,110 +140,139 @@ namespace apHashing
                 {
                     linha = arquivo.ReadLine();
                     qualLista.InserirAposOFim(new Dicionario(linha));
+                    //lsbListagem.Items.Add(linha.ToString());
                 }
-                lsbListagem.Text = qualLista.ListarDados().ToString();
                 arquivo.Close();
             }
+
+            arqPalavraDica = qualLista;
         }
 
-        //se ele tiver escolhido outra tecnica antes, percorrer a tebela e salvar no arq, para percorrer segundo a nova tecnica
+        //se ele tiver escolhido outra tecnica, percorrer a tabela e gravar dados, para percorrer segundo a nova tecnica
 
         private void btnIncluir_Click(object sender, EventArgs e)
         {
+            Dicionario novoRegistro = new Dicionario(txtBPalavra.Text, txtBDica.Text);
+
+            arqPalavraDica.InserirAntesDoInicio(novoRegistro);
+
             switch (hashEscolhido.Trim())
             {
                 case "Bucket hashing":
-                    bucketHash.Incluir(txtBPalavra.Text);
-                    bucketHash.Incluir(txtBDica.Text);
+                    bucketHash.Incluir(novoRegistro);
                     break;
 
                 case "Sondagem linear":
-                    sondLinear.Incluir(txtBPalavra.Text);
-                    sondLinear.Incluir(txtBDica.Text);
+                    sondLinear.Incluir(novoRegistro);
                     break;
 
                 case "Sondagem quadrática":
-                    sondQuadra.Incluir(txtBPalavra.Text);
-                    sondQuadra.Incluir(txtBDica.Text);
+                    sondQuadra.Incluir(novoRegistro);
                     break;
 
                 case "Duplo hashing":
-                    duplo.Incluir(txtBPalavra.Text);
-                    duplo.Incluir(txtBDica.Text);
+                    duplo.Incluir(novoRegistro);
                     break;
 
                 default: break;
             }
+
+            btnListar_Click(sender, e);
         }
 
         private void btnExcluir_Click(object sender, EventArgs e)
         {
+            Dicionario novoRegistro = new Dicionario(txtBPalavra.Text, txtBDica.Text);
+
+            arqPalavraDica.Remover(novoRegistro);
+
             switch (hashEscolhido.Trim())
             {
                 case "Bucket hashing":
-                    bucketHash.Excluir(txtBPalavra.Text);
-                    bucketHash.Excluir(txtBDica.Text);
+                    bucketHash.Excluir(novoRegistro);
                     break;
 
                 case "Sondagem linear":
-                    sondLinear.Excluir(txtBPalavra.Text);
-                    sondLinear.Excluir(txtBDica.Text);
+                    sondLinear.Excluir(novoRegistro);
                     break;
+
                 case "Sondagem quadrática":
-                    sondQuadra.Excluir(txtBPalavra.Text);
-                    sondQuadra.Excluir(txtBDica.Text);
+                    sondQuadra.Excluir(novoRegistro);
                     break;
+
                 case "Duplo hashing":
-                    duplo.Excluir(txtBPalavra.Text);
-                    duplo.Excluir(txtBDica.Text);
+                    duplo.Excluir(novoRegistro);
                     break;
+
                 default: break;
             }
+
+            btnListar_Click(sender, e);
         }
 
         private void btnAlterar_Click(object sender, EventArgs e)
         {
+            Dicionario novoRegistro = new Dicionario(txtBPalavra.Text, txtBDica.Text);
+
+            int indice = arqPalavraDica.RetornaIndiceValor(novoRegistro);
+            arqPalavraDica.PosicionaLista(indice);
+            arqPalavraDica.Atual.Info.Dica = novoRegistro.Dica;
+
             switch (hashEscolhido.Trim())
             {
                 case "Bucket hashing":
-                    bucketHash.Alterar(txtBPalavra.Text, txtBPalavra.Text);
-                    bucketHash.Alterar(txtBDica.Text, txtBDica.Text);
+                    bucketHash.Alterar(novoRegistro);
                     break;
 
                 case "Sondagem linear":
-                    sondLinear.Alterar(txtBPalavra.Text, txtBPalavra.Text);
-                    sondLinear.Alterar(txtBDica.Text, txtBDica.Text);
+                    sondLinear.Alterar(novoRegistro);
                     break;
+
                 case "Sondagem quadrática":
-                    sondQuadra.Alterar(txtBPalavra.Text, txtBPalavra.Text);
-                    sondQuadra.Alterar(txtBDica.Text, txtBDica.Text);
+                    sondQuadra.Alterar(novoRegistro);
                     break;
+
                 case "Duplo hashing":
-                    duplo.Alterar(txtBPalavra.Text, txtBPalavra.Text);
-                    duplo.Alterar(txtBDica.Text, txtBDica.Text);
+                    duplo.Alterar(novoRegistro);
                     break;
+
                 default: break;
             }
+
+            btnListar_Click(sender, e);
         }
 
         private void btnListar_Click(object sender, EventArgs e)
         {
+            List<string> conteudoListagem;
+
+            lsbListagem.Items.Clear();
+
             switch (hashEscolhido.Trim())
             {
                 case "Bucket hashing":
-                    bucketHash.Conteudo();
+                    conteudoListagem = bucketHash.Conteudo();
                     break;
 
                 case "Sondagem linear":
-                    sondLinear.Conteudo();
+                    conteudoListagem = sondLinear.Conteudo();
                     break;
+
                 case "Sondagem quadrática":
-                    sondQuadra.Conteudo();
+                    conteudoListagem = sondQuadra.Conteudo();
                     break;
+
                 case "Duplo hashing":
-                    duplo.Conteudo();
+                    conteudoListagem = duplo.Conteudo();
                     break;
-                default: break;
+
+                default:
+                    return;
+            }
+
+            foreach (string linha in conteudoListagem)
+            {
+                lsbListagem.Items.Add(linha);
             }
         }
 
