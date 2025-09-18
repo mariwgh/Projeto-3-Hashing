@@ -90,6 +90,7 @@ namespace apHashing
         public List<string> Conteudo()
         {
             List<string> saida = new List<string>();
+            saida.Clear();
 
             for (int i = 0; i < SIZE; i++)
             {

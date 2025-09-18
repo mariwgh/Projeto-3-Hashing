@@ -60,34 +60,6 @@ public class ListaSimples<Dado> : IComparable<ListaSimples<Dado>> where Dado : I
         quantosNos++;
     }
 
-    public void ExibirLista()
-    {
-        Console.Clear();  // limpa a tela em modo console
-        atual = primeiro;
-        while (atual != null)
-        {
-            Console.WriteLine(atual.Info);
-            atual = atual.Prox;
-        }
-    }
-
-    public List<Dado> ListarDados()
-    {
-        var listaDeDados = new List<Dado>();
-        atual = primeiro;
-        while (atual != null)
-        {
-            listaDeDados.Add(atual.Info);
-            atual = atual.Prox;
-        }
-        return listaDeDados;
-    }
-
-    public int CompareTo(ListaSimples<Dado> other)
-    {
-        throw new NotImplementedException();
-    }
-
     public bool Remover(Dado dadoARemover)
     {
         if (EstaVazia)
@@ -120,6 +92,69 @@ public class ListaSimples<Dado> : IComparable<ListaSimples<Dado>> where Dado : I
         quantosNos--;
         return true;
     }
+
+    public void ExibirLista()
+    {
+        Console.Clear();  // limpa a tela em modo console
+        atual = primeiro;
+        while (atual != null)
+        {
+            Console.WriteLine(atual.Info);
+            atual = atual.Prox;
+        }
+    }
+
+    public List<Dado> ListarDados()
+    {
+        var listaDeDados = new List<Dado>();
+        atual = primeiro;
+        while (atual != null)
+        {
+            listaDeDados.Add(atual.Info);
+            atual = atual.Prox;
+        }
+        return listaDeDados;
+    }
+
+    public int CompareTo(ListaSimples<Dado> other)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool Existe(Dado outroProcurado)
+    {
+        anterior = null;
+        atual = primeiro;
+
+        if (EstaVazia)
+        {
+            return false;
+        }
+
+        bool achou = false;
+
+        while (atual != null && !achou)
+        {
+            if (atual.Info.Equals(outroProcurado)) 
+            {
+                achou = true;
+            }
+            else
+            {
+                anterior = atual;
+                atual = atual.Prox;
+            }
+        }
+
+        if (!achou)
+        {
+            anterior = ultimo; 
+            atual = null;      
+        }
+
+        return achou;
+    }
+
 
     //metodo que retorna o valor do indice desejado
     public NoLista<Dado> RetornaValorIndice(int indice)
@@ -182,74 +217,18 @@ public class ListaSimples<Dado> : IComparable<ListaSimples<Dado>> where Dado : I
 
     }
 
-    public bool Existe(Dado outroProcurado)
+
+    public void LerRegistro(string arquivo, ref ListaSimples<Dicionario> qualLista)
     {
-        anterior = null;
-        atual = primeiro;
-
-        //	Em seguida, é verificado se a lista está vazia. Caso esteja, é
-        //	retornado false ao local de chamada, indicando que a chave não foi
-        //	encontrada, e atual e anterior ficam valendo null
-        if (EstaVazia)
-            return false;
-
-        // a lista não está vazia, possui nós
-        // dado procurado é menor que o primeiro dado da lista:
-        // portanto, dado procurado não existe
-        if (outroProcurado.CompareTo(primeiro.Info) < 0)
-            return false;
-
-        // dado procurado é maior que o último dado da lista:
-        // portanto, dado procurado não existe
-        if (outroProcurado.CompareTo(ultimo.Info) > 0)
+        qualLista = new ListaSimples<Dicionario>();                 // recria a lista a ser lida
+        StreamReader leitor = new StreamReader(arquivo);
+        string linha = "";
+        while (!leitor.EndOfStream)                            // enquanto não acabou o arquivo
         {
-            anterior = ultimo;
-            atual = null;
-            return false;
+            linha = leitor.ReadLine();
+            qualLista.InserirAposOFim(new Dicionario(linha));
         }
-
-        //	caso não tenha sido definido que a chave está fora dos limites de 
-        //	chaves da lista, vamos procurar no seu interior
-        //	o apontador atual indica o primeiro nó da lista e consideraremos que
-        //	ainda não achou a chave procurada nem chegamos ao final da lista
-        bool achou = false;
-        bool fim = false;
-
-        //	repete os comandos abaixo enquanto não achou o RA nem chegou ao
-        //	final da pesquisa
-        while (!achou && !fim)
-            // se o apontador atual vale null, indica final físico da lista
-            if (atual == null)
-                fim = true;
-            // se não chegou ao final da lista, verifica o valor da chave atual
-            else
-              // verifica igualdade entre chave procurada e chave do nó atual
-              if (outroProcurado.CompareTo(atual.Info) == 0)
-                achou = true;
-            else
-                // se chave atual é maior que a procurada, significa que
-                // a chave procurada não existe na lista ordenada e, assim,
-                // termina a pesquisa indicando que não achou. Anterior
-                // aponta o nó anterior ao atual, que foi acessado na
-                // última repetição
-                if (atual.Info.CompareTo(outroProcurado) > 0)
-                fim = true;
-            else
-            {
-                // se não achou a chave procurada nem uma chave > que ela,
-                // então a pesquisa continua, de maneira que o apontador
-                // anterior deve apontar o nó atual e o apontador atual
-                // deve seguir para o nó seguinte
-                anterior = atual;
-                atual = atual.Prox;
-            }
-
-        // por fim, caso a pesquisa tenha terminado, o apontador atual
-        // aponta o nó onde está a chave procurada, caso ela tenha sido
-        // encontrada, ou aponta o nó onde ela deveria estar para manter a
-        // ordenação da lista. O apontador anterior aponta o nó anterior
-        // ao atual
-        return achou;   // devolve o valor da variável achou, que indica
+        leitor.Close();
     }
 
     public void GravarDados(string nomeArq)
@@ -263,5 +242,4 @@ public class ListaSimples<Dado> : IComparable<ListaSimples<Dado>> where Dado : I
         }
         arquivo.Close();
     }
-
 }
