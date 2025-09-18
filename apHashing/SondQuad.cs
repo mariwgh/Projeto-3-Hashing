@@ -10,15 +10,15 @@ namespace apHashing
 {
     internal class SondQuad<T> where T : IRegistro<T>, new()
     {
-        //Igual a linear, mas em vez de ir um por um, você pula cada vez mais longe para achar espaço.
-        
+        // igual a linear, mas em vez de ir um por um, pula cada vez mais longe para achar espaço
+
         private const int SIZE = 37;    // para gerar mais colisões; o ideal é primo > 100
         T[] dados;                      // tabela de hash expansível
 
         public SondQuad()
         {
             dados = new T[SIZE];
-            
+
         }
 
         private int Hash(string chave)

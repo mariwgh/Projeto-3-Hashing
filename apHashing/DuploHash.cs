@@ -9,11 +9,13 @@ namespace apHashing
 {
     internal class DuploHash<T> where T : IRegistro<T>, new()
     {
-        //Usa outro cálculo pra achar lugar.
+        // usa outro cálculo pra achar lugar
 
         private const int SIZE = 37;    // para gerar mais colisões; o ideal é primo > 100
         T[] dados;                      // tabela de hash expansível
-        public DuploHash() { 
+
+        public DuploHash()
+        {
             dados = new T[SIZE];
         }
 
@@ -42,8 +44,8 @@ namespace apHashing
             int hash2 = 1 + (chaveNumerica % (SIZE - 1));
 
             int where = hash1;
-            
-            while(!incluiu && tentativas < SIZE)
+
+            while (!incluiu && tentativas < SIZE)
             {
                 if (dados[where] == null)
                 {
@@ -75,7 +77,7 @@ namespace apHashing
             return excluiu;
         }
 
-        public bool Existe(T dado, out int onde) 
+        public bool Existe(T dado, out int onde)
         {
             int chaveNumerica = dado.Chave.GetHashCode();       //transforma em ASCII
             bool achou = false;
@@ -86,12 +88,12 @@ namespace apHashing
             int hash2 = 1 + (chaveNumerica % (SIZE - 1));
 
             onde = hash1;
-            
+
             while (!achou && tentativas < SIZE)     //se ja rodou tudo e nao achou, é pq não existe
             {
                 if (dados[onde].Equals(dado))
                     achou = true;
-                
+
                 else
                 {
                     tentativas++;

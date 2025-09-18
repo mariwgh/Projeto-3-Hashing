@@ -21,7 +21,7 @@ namespace apHashing
         SondLinear<Dicionario> sondLinear = new SondLinear<Dicionario>();
         SondQuad<Dicionario> sondQuadra = new SondQuad<Dicionario>();
         DuploHash<Dicionario> duplo = new DuploHash<Dicionario>();
-        
+
         public Form1()
         {
             InitializeComponent();
@@ -34,7 +34,7 @@ namespace apHashing
 
 
         //seleção da técnica de hashing:
-        //qnd o user selecionar o radiobutton de buckethashing
+        //quando o user selecionar o radiobutton de buckethashing
         private void bcktHash_CheckedChanged(object sender, EventArgs e)
         {
             hashEscolhido = bcktHash.Text;
@@ -42,13 +42,13 @@ namespace apHashing
 
             if (arqPalavraDica != null)
             {
-                // Itera sobre a lista de dados lida do arquivo
+                // itera sobre a lista de dados lida do arquivo
                 arqPalavraDica.PosicionaLista(0);
                 var noAtual = arqPalavraDica.Atual;
 
                 while (noAtual != null)
                 {
-                    // Insere cada item lido do arquivo na tabela de hash
+                    // insere cada item lido do arquivo na tabela de hash
                     bucketHash.Incluir(noAtual.Info);
                     noAtual = noAtual.Prox;
                 }
@@ -65,13 +65,13 @@ namespace apHashing
 
             if (arqPalavraDica != null)
             {
-                // Itera sobre a lista de dados lida do arquivo
+                // itera sobre a lista de dados lida do arquivo
                 arqPalavraDica.PosicionaLista(0);
                 var noAtual = arqPalavraDica.Atual;
 
                 while (noAtual != null)
                 {
-                    // Insere cada item lido do arquivo na tabela de hash
+                    // insere cada item lido do arquivo na tabela de hash
                     sondLinear.Incluir(noAtual.Info);
                     noAtual = noAtual.Prox;
                 }
@@ -88,13 +88,13 @@ namespace apHashing
 
             if (arqPalavraDica != null)
             {
-                // Itera sobre a lista de dados lida do arquivo
+                // itera sobre a lista de dados lida do arquivo
                 arqPalavraDica.PosicionaLista(0);
                 var noAtual = arqPalavraDica.Atual;
 
                 while (noAtual != null)
                 {
-                    // Insere cada item lido do arquivo na tabela de hash
+                    // insere cada item lido do arquivo na tabela de hash
                     sondQuadra.Incluir(noAtual.Info);
                     noAtual = noAtual.Prox;
                 }
@@ -111,13 +111,13 @@ namespace apHashing
 
             if (arqPalavraDica != null)
             {
-                // Itera sobre a lista de dados lida do arquivo
+                // itera sobre a lista de dados lida do arquivo
                 arqPalavraDica.PosicionaLista(0);
                 var noAtual = arqPalavraDica.Atual;
 
                 while (noAtual != null)
                 {
-                    // Insere cada item lido do arquivo na tabela de hash
+                    // insere cada item lido do arquivo na tabela de hash
                     duplo.Incluir(noAtual.Info);
                     noAtual = noAtual.Prox;
                 }
@@ -132,20 +132,19 @@ namespace apHashing
         {
             lsbListagem.Items.Clear();
 
-            qualLista = new ListaSimples<Dicionario>();     // recria a lista a ser lida
+            qualLista = new ListaSimples<Dicionario>();                 // recria a lista a ser lida
 
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Title = "Escolher arquivo para ler dados.";
 
-            if (openFileDialog.ShowDialog() == DialogResult.OK)  // usuário pressionou botão Abrir?
+            if (openFileDialog.ShowDialog() == DialogResult.OK)         // usuário pressionou botão Abrir?
             {
                 StreamReader arquivo = new StreamReader(openFileDialog.FileName);
                 string linha = "";
-                while (!arquivo.EndOfStream)  // enquanto não acabou o arquivo
+                while (!arquivo.EndOfStream)                            // enquanto não acabou o arquivo
                 {
                     linha = arquivo.ReadLine();
                     qualLista.InserirAposOFim(new Dicionario(linha));
-                    //lsbListagem.Items.Add(linha.ToString());
                 }
                 arquivo.Close();
             }

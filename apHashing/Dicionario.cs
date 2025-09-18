@@ -168,9 +168,9 @@ namespace apListaLigada
 
         public bool Equals(Dicionario outroRegistro)
         {
-            // Se o outro registro for nulo, eles não podem ser iguais
+            // se o outro registro for nulo, eles não podem ser iguais
             if (outroRegistro == null)
-                    return false;
+                return false;
 
             return this.Palavra.Equals(outroRegistro.Palavra);
         }

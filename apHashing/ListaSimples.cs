@@ -39,8 +39,8 @@ public class ListaSimples<Dado> : IComparable<ListaSimples<Dado>> where Dado : I
         NoLista<Dado> novoNo = new NoLista<Dado>(novoDado);
         // var novoNo = new NoLista<Dado>(novoDado);
 
-        if (EstaVazia)        // se a lista está vazia, estamos
-            ultimo = novoNo;   // incluindo o 1o e o último nós!
+        if (EstaVazia)              // se a lista está vazia, estamos
+            ultimo = novoNo;        // incluindo o 1o e o último no
 
         novoNo.Prox = primeiro;
 
@@ -128,7 +128,7 @@ public class ListaSimples<Dado> : IComparable<ListaSimples<Dado>> where Dado : I
 
         if (indice < 0 || indice >= quantosNos)
         {
-            // Se o índice for inválido, o método retorna null.
+            // se o índice for inválido, o método retorna null
             return null;
         }
 

@@ -6,8 +6,8 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 public class BucketHash<T> where T : IRegistro<T>, IComparable<T>, new()
 {
-    //Cada compartimento pode guardar mais de uma coisa.
-    //Se duas coisas caírem no mesmo compartimento, você coloca na mesma lista dentro dele.
+    // cada compartimento pode guardar mais de uma coisa
+    // se duas coisas cairem no mesmo compartimento, coloca na mesma lista dentro dele
 
     private const int SIZE = 37;            // para gerar mais colisões; o ideal é primo > 100
     ListaSimples<ListaSimples<T>> dados;    // tabela de hash expansível; é uma lista de listas
@@ -100,16 +100,16 @@ public class BucketHash<T> where T : IRegistro<T>, IComparable<T>, new()
     public bool Alterar(T dadoNovo)
     {
         //usuario so altera dica
-      
+
         int indice;
 
         if (Existe(dadoNovo, out indice))
         {
-            // Se o registro (dado novo) existe, você o encontra na lista.
+            // se dado novo existe, encontra ele na lista
             dados.PosicionaLista(indice);
             ListaSimples<T> compPalavraDica = dados.Atual.Info;
 
-            // encontrar o item específico dentro da lista do bucket
+            // encontrar o item especifico dentro da lista do bucket
             var no = compPalavraDica.Atual;
             while (no != null)
             {
@@ -126,6 +126,6 @@ public class BucketHash<T> where T : IRegistro<T>, IComparable<T>, new()
                 no = no.Prox;
             }
         }
-        return false; 
+        return false;
     }
 }
