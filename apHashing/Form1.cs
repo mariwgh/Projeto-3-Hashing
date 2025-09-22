@@ -21,7 +21,7 @@ namespace apHashing
         SondLinear<Dicionario> sondLinear = new SondLinear<Dicionario>();
         SondQuad<Dicionario> sondQuadra = new SondQuad<Dicionario>();
         DuploHash<Dicionario> duplo = new DuploHash<Dicionario>();
-        
+
         public Form1()
         {
             InitializeComponent();
@@ -34,23 +34,24 @@ namespace apHashing
 
 
         //seleção da técnica de hashing:
-        //qnd o user selecionar o radiobutton de buckethashing
+        //quando o user selecionar o radiobutton de buckethashing
         private void bcktHash_CheckedChanged(object sender, EventArgs e)
         {
             hashEscolhido = bcktHash.Text;
-            FazerLeitura(arqPalavraDica);
+            FazerLeitura(ref arqPalavraDica);
 
             if (arqPalavraDica != null)
             {
-                // Itera sobre a lista de dados lida do arquivo
+                // itera sobre a lista de dados lida do arquivo
                 arqPalavraDica.PosicionaLista(0);
                 var noAtual = arqPalavraDica.Atual;
 
                 while (noAtual != null)
                 {
-                    // Insere cada item lido do arquivo na tabela de hash
+                    // insere cada item lido do arquivo na tabela de hash
                     bucketHash.Incluir(noAtual.Info);
                     noAtual = noAtual.Prox;
+
                 }
             }
 
@@ -61,17 +62,17 @@ namespace apHashing
         private void sondLin_CheckedChanged(object sender, EventArgs e)
         {
             hashEscolhido = sondLin.Text;
-            FazerLeitura(arqPalavraDica);
+            FazerLeitura(ref arqPalavraDica);
 
             if (arqPalavraDica != null)
             {
-                // Itera sobre a lista de dados lida do arquivo
+                // itera sobre a lista de dados lida do arquivo
                 arqPalavraDica.PosicionaLista(0);
                 var noAtual = arqPalavraDica.Atual;
 
                 while (noAtual != null)
                 {
-                    // Insere cada item lido do arquivo na tabela de hash
+                    // insere cada item lido do arquivo na tabela de hash
                     sondLinear.Incluir(noAtual.Info);
                     noAtual = noAtual.Prox;
                 }
@@ -84,17 +85,17 @@ namespace apHashing
         private void sondQua_CheckedChanged(object sender, EventArgs e)
         {
             hashEscolhido = sondQua.Text;
-            FazerLeitura(arqPalavraDica);
+            FazerLeitura(ref arqPalavraDica);
 
             if (arqPalavraDica != null)
             {
-                // Itera sobre a lista de dados lida do arquivo
+                // itera sobre a lista de dados lida do arquivo
                 arqPalavraDica.PosicionaLista(0);
                 var noAtual = arqPalavraDica.Atual;
 
                 while (noAtual != null)
                 {
-                    // Insere cada item lido do arquivo na tabela de hash
+                    // insere cada item lido do arquivo na tabela de hash
                     sondQuadra.Incluir(noAtual.Info);
                     noAtual = noAtual.Prox;
                 }
@@ -107,17 +108,17 @@ namespace apHashing
         private void duplHash_CheckedChanged(object sender, EventArgs e)
         {
             hashEscolhido = duplHash.Text;
-            FazerLeitura(arqPalavraDica);
+            FazerLeitura(ref arqPalavraDica);
 
             if (arqPalavraDica != null)
             {
-                // Itera sobre a lista de dados lida do arquivo
+                // itera sobre a lista de dados lida do arquivo
                 arqPalavraDica.PosicionaLista(0);
                 var noAtual = arqPalavraDica.Atual;
 
                 while (noAtual != null)
                 {
-                    // Insere cada item lido do arquivo na tabela de hash
+                    // insere cada item lido do arquivo na tabela de hash
                     duplo.Incluir(noAtual.Info);
                     noAtual = noAtual.Prox;
                 }
@@ -127,43 +128,19 @@ namespace apHashing
         }
 
 
-        //ler o arquivo de palavras e dicas qnd ele escolhe uma tecnica
-        private void FazerLeitura(ListaSimples<Dicionario> qualLista)
-        {
-            lsbListagem.Items.Clear();
-
-            qualLista = new ListaSimples<Dicionario>();     // recria a lista a ser lida
-
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Title = "Escolher arquivo para ler dados.";
-
-            if (openFileDialog.ShowDialog() == DialogResult.OK)  // usuário pressionou botão Abrir?
-            {
-                StreamReader arquivo = new StreamReader(openFileDialog.FileName);
-                string linha = "";
-                while (!arquivo.EndOfStream)  // enquanto não acabou o arquivo
-                {
-                    linha = arquivo.ReadLine();
-                    qualLista.InserirAposOFim(new Dicionario(linha));
-                    //lsbListagem.Items.Add(linha.ToString());
-                }
-                arquivo.Close();
-            }
-
-            arqPalavraDica = qualLista;
-        }
-
-
         private void btnIncluir_Click(object sender, EventArgs e)
         {
             Dicionario novoRegistro = new Dicionario(txtBPalavra.Text, txtBDica.Text);
 
             arqPalavraDica.InserirAntesDoInicio(novoRegistro);
 
+            SalvarNoArq("Escolha o arquivo para salvar os dados.");
+
             switch (hashEscolhido.Trim())
             {
                 case "Bucket hashing":
                     bucketHash.Incluir(novoRegistro);
+                    //SalvarNoArq();
                     break;
 
                 case "Sondagem linear":
@@ -192,6 +169,8 @@ namespace apHashing
             Dicionario novoRegistro = new Dicionario(txtBPalavra.Text, txtBDica.Text);
 
             arqPalavraDica.Remover(novoRegistro);
+
+            SalvarNoArq("Escolha o arquivo para salvar os dados.");
 
             switch (hashEscolhido.Trim())
             {
@@ -224,6 +203,8 @@ namespace apHashing
             int indice = arqPalavraDica.RetornaIndiceValor(novoRegistro);
             arqPalavraDica.PosicionaLista(indice);
             arqPalavraDica.Atual.Info.Dica = novoRegistro.Dica;
+
+            SalvarNoArq("Escolha o arquivo para salvar os dados.");
 
             switch (hashEscolhido.Trim())
             {
@@ -284,16 +265,31 @@ namespace apHashing
         }
 
 
+        //ler o arquivo de palavras e dicas qnd ele escolhe uma tecnica
+        private void FazerLeitura(ref ListaSimples<Dicionario> qualLista)
+        {
+            qualLista = new ListaSimples<Dicionario>();                 // recria a lista a ser lida
+
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Title = "Escolher arquivo para ler dados.";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)         // usuário pressionou botão Abrir?
+            {
+                arqPalavraDica.LerRegistro(openFileDialog.FileName, ref arqPalavraDica);
+            }
+        }
+
+
         //qnd o programa for encerrado, percorrer a tabela de hashing e salvar os dados no arq
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            SalvarNoArq();
+            SalvarNoArq("Escolha o arquivo para gravar os dados e encerrar o programa.");
         }
 
-        private void SalvarNoArq()
+        private void SalvarNoArq(string title)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Title = "Salvar dados no arquivo para encerrar programa.";
+            openFileDialog.Title = title;
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {

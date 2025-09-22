@@ -11,6 +11,7 @@ using System.Linq;
 using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace apListaLigada
 {
@@ -168,9 +169,9 @@ namespace apListaLigada
 
         public bool Equals(Dicionario outroRegistro)
         {
-            // Se o outro registro for nulo, eles não podem ser iguais
+            // se o outro registro for nulo, eles não podem ser iguais
             if (outroRegistro == null)
-                    return false;
+                return false;
 
             return this.Palavra.Equals(outroRegistro.Palavra);
         }
@@ -194,6 +195,18 @@ namespace apListaLigada
         public static bool operator >=(Dicionario left, Dicionario right)
         {
             return left.CompareTo(right) >= 0;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Dicionario outro)
+                return Palavra.Trim().Equals(outro.Palavra.Trim(), StringComparison.OrdinalIgnoreCase);
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Palavra.Trim().ToLower().GetHashCode();
         }
     }
 }

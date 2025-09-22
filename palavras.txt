@@ -4,7 +4,6 @@ fogo                           queima
 sol                            brilha no céu
 casa                           lugar onde você mora
 Cachorro                       best friend of man
-Mariana                        Marietti
 Banana                         Fruta
 Palavra com 30 caractere       Dica até o final da linha
 Francisco da Fonseca Rodrigues O humilde professor
@@ -13,4 +12,4 @@ Cachorro                       Melhor amigo das pessoas
 Fentanil                       Pesadelo do Trump
 Processador                    Aquele que processa
 Truco                          Jogo de cartas
-Oi                             Tchau
+Casa                           Onde mora
