@@ -181,6 +181,9 @@ namespace apHashing
                 default: break;
             }
 
+            txtBDica.Clear();
+            txtBPalavra.Clear();
+
             btnListar_Click(sender, e);
         }
 
